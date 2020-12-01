@@ -23,4 +23,5 @@ Language: en-US
 Imports: 
     rlang,
     DBI,
-    purrr
+    purrr,
+    vctrs
