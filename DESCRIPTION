@@ -20,3 +20,7 @@ RoxygenNote: 7.1.1
 URL: https://github.com/mgirlich/tidysql
 BugReports: https://github.com/mgirlich/tidysql/issues
 Language: en-US
+Imports: 
+    rlang,
+    DBI,
+    purrr
