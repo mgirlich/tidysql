@@ -1,0 +1,74 @@
+---
+title: "tidysql"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tidysql}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Goals
+
+* reduce need to write raw SQL yourself
+* make it easy to write raw SQL yourself when needed
+
+## High Level
+
+Functions to create different types of queries:
+
+* *D*ata *Q*uery *L*anguage: `SELECT`, `JOIN`, `SEMI/ANTI JOIN`, `UNION (ALL)`, `VALUES`
+* *D*data *D*efintion *L*anguage: `CREATE/ALTER/DROP` a (table/index/function/trigger)
+* *D*ata *M*anipulation *L*anguage: `INSERT`, `APPEND`, `UPDATE`, `UPSERT`, DELETE`
+* Metadata e.g. list tables, index, ...
+
+Thoughts and Questions
+* Does it make sense to also provide query objects?
+* `sql_query_select(select)` takes a named `select` and escapes the names. Should
+  there be a way to mark the names as already escaped?
+
+
+## SQL Types
+
+* SQL
+* ident, ident_q
+* `table(name, catalog = NULL)`
+* `column(name, table = NULL, catalog = NULL)`
+
+Thoughts and Questions
+* they should be built on vctrs
+* they do not overwrite each other, e.g. `sql(ident(x)) = ident(x)` etc
+* do not allow to mix, e.g. `c(<ident>, <sql>)`. Maybe need a helper to create a list of mixed types?
+
+
+## Low Level
+
+Clause helpers like in dbplyr, e.g. `dbplyr:::sql_clause_select()`
+
+
+## Create Raw SQL
+
+Currently there are
+
+* `dbplyr::build_sql()`
+* `dbplyr::sql_expr()`
+* `glue::glue_sql()`
+
+I think some form of `glue_sql()` makes most sense
+
+
+## `escape()`
+
+Thoughts and Questions
+* should `sql_escape_ident()` and `sql_escape_literal()` use DBI methods or should
+  they be defined here?
+
+## `translate_sql()`
+
+* should this be part of this package or dbplyr?
